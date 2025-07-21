@@ -58,6 +58,11 @@ ros2 action list
 ```bash 
 # show msg type details
 ros2 interface show rcl_interfaces/msg/ParameterEvent
+
+ros2 interface show geometry_msgs/msg/Twist
+
+# show srv type details
+ros2 interface show turtlesim/srv/Kill
 ```
 
 ## ros2 launch
@@ -71,8 +76,32 @@ ros2 interface show rcl_interfaces/msg/ParameterEvent
 ```bash 
 # list of all nodes
 ros2 node list
+
+# see node info
+ros2 node info /turtlesim
 ```
+
 ## ros2 param
+
+```bash 
+# list of all params
+ros2 param list
+
+# display current value
+ros2 param get /turtlesim background_b
+
+# change current value
+ros2 param set /turtlesim background_b 50
+
+# all of a node's current paramater values
+ros2 param dump /turtlesim
+
+# save all of a node's current parameter values
+ros2 param dump /turtlesim > parameters.yaml
+
+# load params to currently running node
+ros2 param load /turtlesim turtlesim.yaml
+```
 
 ## ros2 pkg
 
@@ -87,6 +116,12 @@ ros2 pkg executables turtlesim
 # run a ros2 node
 # ros2 run <pakcage_name> <node_name>
 ros2 run turtlesim turtlesim_node
+
+# remap node name
+ros2 run turtlesim turtlesim_node --ros-args --remap __node:=/my_cute_turtle
+
+# load param @ startup
+ros2 run turtlesim turtlesim_node --ros-args --params-file params.yaml
 ```
 
 ---
@@ -104,13 +139,70 @@ ros2 run turtlesim turtle_teleop_key --ros-args --remap turtle1/cmd_vel:=turtle2
 ```bash 
 # list of all nodes
 ros2 service list
-```
----
 
-```bash 
 # learn service type
 ros2 service type /kill
+
+ros2 service type /clear
+# std_srvs/srv/Empty
+
+# The Empty type means the service call sends no data when making a request and receives no data when receiving a response.
+
+# list all services with types
+ros2 service list -t
+
+# find specific type of services
+ros2 service find std_srvs/srv/Empty
+
+# call service
+ros2 service call /clear std_srvs/srv/Empty
+
+ros2 service call /spawn turtlesim/srv/Spawn "{x: 2, y: 2, theta: 0.2, name: ''}"
 ```
 ## ros2 topic
+
+```bash 
+# list all topics
+ros2 topic list
+
+# list all topics with their types
+ros2 topic list -t
+
+# see topic data
+ros2 topic echo /turtle1/cmd_vel
+
+# see topic pubs and subs
+ros2 topic info /turtle1/cmd_vel
+
+# publish messages (require YAML format) by default publishes @1 Hz
+ros2 topic pub /turtle1/cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"
+
+# publish msg at different frequencies
+ros2 topic pub --rate 5 /turtle1/cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"
+
+# publish only once and wait 2 subscriber
+ros2 topic pub --once -w 2 /turtle1/cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"
+
+# fill header time auto
+ros2 topic pub /pose geometry_msgs/msg/PoseStamped \
+'{header: "auto", pose: {position: {x: 1.0, y: 2.0, z: 3.0}}}'
+
+# if msg does not include header time (builtin_interfaces/msg/Time)
+ros2 topic pub /reference sensor_msgs/msg/TimeReference \
+'{header: "auto", time_ref: "now", source: "dumy"}'
+
+# see frequency of a topic
+ros2 topic hz /turtle1/pose
+
+# see bandwidth
+ros2 topic bw /turtle1/pose
+
+# see specific type of topics
+ros2 topic find geometry_msgs/msg/Twist
+
+```
 
 ## ros2 wtf
