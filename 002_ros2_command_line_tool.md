@@ -56,6 +56,23 @@ ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/ RotateAbsolute 
 
 ## ros2 bag
 
+```bash 
+# record a single topic
+ros2 bag record /turtlesim1/turtle1/cmd_vel
+
+# record a ros2 bag with specific name
+ros2 bag record -o turtlesim_bag /turtlesim/turtle1/cmd_vel /turtlesim1/turtle1/pose
+
+# record all topics
+ros2 bag record -a
+
+# details of bag
+ros2 bag info turtlesim_bag
+
+# play ros2 bag
+ros2 bag play turtlesim_bag
+```
+
 ## ros2 component
 
 ## ros2 daemon
@@ -79,6 +96,11 @@ ros2 interface proto sensor_msgs/msg/Imu
 ```
 
 ## ros2 launch
+
+```bash 
+# basic usage
+ros2 launch turtlesim multisim.launch.py
+```
 
 ## ros2 lifecycle
 
@@ -135,6 +157,9 @@ ros2 run turtlesim turtlesim_node --ros-args --remap __node:=/my_cute_turtle
 
 # load param @ startup
 ros2 run turtlesim turtlesim_node --ros-args --params-file params.yaml
+
+#Set log level of node
+ros2 run turtlesim turtlesim_node --ros-args --log-level INFO
 ```
 
 ---
