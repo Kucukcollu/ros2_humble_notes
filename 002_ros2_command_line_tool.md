@@ -41,8 +41,17 @@ $ ros2 --help
 ## ros2 action
 
 ```bash 
-# list of all nodes
+# list of all actions
 ros2 action list
+
+# list of all actions with type
+ros2 action list -t
+
+# see details of action
+ros2 action info /turtle1/rotate_absolute
+
+# sent action goal
+ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/ RotateAbsolute '{theta: 1.57}'
 ```
 
 ## ros2 bag
@@ -57,12 +66,16 @@ ros2 action list
 
 ```bash 
 # show msg type details
-ros2 interface show rcl_interfaces/msg/ParameterEvent
-
 ros2 interface show geometry_msgs/msg/Twist
 
 # show srv type details
 ros2 interface show turtlesim/srv/Kill
+
+# show action type details
+ros2 interface show turtlesim/action/RotateAbsolute
+
+# interface prototype ---> see dummy interface
+ros2 interface proto sensor_msgs/msg/Imu
 ```
 
 ## ros2 launch
