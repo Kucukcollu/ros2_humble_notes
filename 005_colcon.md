@@ -99,8 +99,14 @@ colcon build --executor parallel
 # build the packages one by one 
 colcon build --executor sequential
 
-## build in debug mode
+# build in debug mode
 colcon build --cmake-args -DCMAKE_BUILD_TYPE=Debug
+
+# build a specific package and their deps
+colcon build --packages-up-to <package_name>
+
+# shows console output while building
+colcon build --event-handlers console_direct+
 ```
 
 ## colcon test
