@@ -56,3 +56,7 @@ CATKIN_IGNORE
 
 # workspaces
 ros2_ws/
+
+# vscode
+.vscode
+**/.vscode
