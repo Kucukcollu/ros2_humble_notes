@@ -143,6 +143,15 @@ ros2 param load /turtlesim turtlesim.yaml
 ```bash 
 # a list of turtlesim’s executables
 ros2 pkg executables turtlesim
+
+# ros2 package create
+ros2 pkg create --build-type ament_cmake --license MIT my_package
+
+# ros2 package create with node name
+ros2 pkg create --build-type ament_cmake --license Apache-2.0 --node-name my_node my_package
+
+# more detailed package creation
+ros2 pkg create dummy_ros2_package --license MIT --build-type ament_cmake --dependencies rclcpp std_msgs
 ```
 
 ## ros2 run
