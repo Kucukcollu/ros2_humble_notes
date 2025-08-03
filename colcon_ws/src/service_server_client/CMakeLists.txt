@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(odometry_pub_sub)
-
-set(CMAKE_CXX_STANDARD 14)
+project(service_server_client)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -10,17 +8,17 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(nav_msgs REQUIRED)
+find_package(example_interfaces REQUIRED)
 
-add_executable(odometry_publisher src/odometry_publisher.cpp)
-ament_target_dependencies(odometry_publisher rclcpp nav_msgs)
+add_executable(service_server src/service_server.cpp)
+ament_target_dependencies(service_server rclcpp example_interfaces)
 
-add_executable(odometry_subscriber src/odometry_subscriber.cpp)
-ament_target_dependencies(odometry_subscriber rclcpp nav_msgs)
+add_executable(service_client src/service_client.cpp)
+ament_target_dependencies(service_client rclcpp example_interfaces)
 
-install(TARGETS
-  odometry_publisher
-  odometry_subscriber
+INSTALL(TARGETS 
+  service_server
+  service_client
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

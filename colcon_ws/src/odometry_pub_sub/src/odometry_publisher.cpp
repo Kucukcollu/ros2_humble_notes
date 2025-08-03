@@ -43,7 +43,7 @@ class OdometryPublisher : public rclcpp::Node
       odom_data.twist.twist.angular.z = 0.0;
 
       RCLCPP_INFO(this->get_logger(), "Publishing odometry message!");
-      
+    
       odom_publisher_->publish(odom_data);
     }
     rclcpp::TimerBase::SharedPtr timer_;
