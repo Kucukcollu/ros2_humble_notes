@@ -10,6 +10,7 @@ int main(int argc, char **argv)
 {
     rclcpp::init(argc,argv);
 
+    // take 2 argument for request
     if(argc != 3)
     {
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "you must give 2 seperate int numbers!");
@@ -35,9 +36,10 @@ int main(int argc, char **argv)
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Service not available, waiting again...");
     }
 
+    // result = service response
     auto result = service_client->async_send_request(request);
 
-    if(rclcpp::spin_until_future_complete(node, result) == rclcpp::FutureReturnCode::SUCCESS)
+    if(rclcpp::spin_until_future_complete(node, result) == rclcpp::FutureReturnCode::SUCCESS) // options: SUCCESS, INTERRUPTED, TIMEOUT
     {
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Sum = %ld", result.get()->sum);
     }

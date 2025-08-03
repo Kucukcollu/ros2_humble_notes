@@ -13,7 +13,7 @@ class OdometryPublisher : public rclcpp::Node
   public:
     OdometryPublisher() : Node("odometry_publisher")
     {
-      odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("vehicle/odometry", 50);
+      odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("vehicle/odometry", 50); // publish odom in 50 Hz
       timer_ = this->create_wall_timer(20ms, std::bind(&OdometryPublisher::timer_callback, this));
     }
 
@@ -27,8 +27,8 @@ class OdometryPublisher : public rclcpp::Node
 
       odom_data.child_frame_id = "odom";
 
-      odom_data.pose.pose.position.x = 4.0;
-      odom_data.pose.pose.position.y = 4.0;
+      odom_data.pose.pose.position.x = 4.0; // 4 meters in X
+      odom_data.pose.pose.position.y = 4.0; // 4 meters in Y
       odom_data.pose.pose.position.z = 0.0;
       odom_data.pose.pose.orientation.x = 0.0;
       odom_data.pose.pose.orientation.y = 0.0;
